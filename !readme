@@ -1,0 +1,11 @@
+Скачать файл https://java-google-translate-text-to-speech.googlecode.com/files/jl1.0.jar и установить его (jl1.0.jar) в maven-репозиторий командой
+mvn install:install-file -DcreateChecksum=true -Dpackaging=jar -Dfile=jl1.0.jar -DgroupId=javazoom -DartifactId=jl -Dversion=1.0
+
+Скачать файл https://java-google-translate-text-to-speech.googlecode.com/files/gtranslateapi-1.0.jar и установить его (gtranslateapi-1.0.jar) в maven-репозиторий командой
+mvn install:install-file -DcreateChecksum=true -Dpackaging=jar -Dfile=gtranslateapi-1.0.jar -DgroupId=com.translate -DartifactId=gtranslateapi -Dversion=1.0
+
+Запуск приложения выполняется командой: 
+mvn exec:java
+
+Путь к серверу в классе ScanCodeAndSend:
+  private static final String REST_URL         = "http://127.0.0.1:8080/pt-api-0.0.4-SNAPSHOT/rest";
