@@ -32,7 +32,7 @@ import com.gtranslate.Language;
 
 public class ScanCodeAndSend extends JFrame implements Runnable, ThreadFactory {
 
-  private static final String REST_URL         = "http://127.0.0.1:8080/pt-api-0.0.4-SNAPSHOT/rest";
+  private static final String REST_URL         = "http://127.0.0.1:8080/pt-api-0.0.5-SNAPSHOT/rest";
 
   private static final long   serialVersionUID = 6441489157408381878L;
 
