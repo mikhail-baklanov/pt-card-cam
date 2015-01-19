@@ -5,7 +5,7 @@ mvn install:install-file -DcreateChecksum=true -Dpackaging=jar -Dfile=jl1.0.jar 
 mvn install:install-file -DcreateChecksum=true -Dpackaging=jar -Dfile=gtranslateapi-1.0.jar -DgroupId=com.translate -DartifactId=gtranslateapi -Dversion=1.0
 
 Запуск приложения выполняется командой: 
-mvn exec:java
+mvn clean package exec:java
 
 Путь к серверу в классе ScanCodeAndSend:
   private static final String REST_URL         = "http://127.0.0.1:8080/pt-api-0.0.4-SNAPSHOT/rest";
