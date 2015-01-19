@@ -7,6 +7,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -139,26 +141,38 @@ public class ScanCodeAndSend extends JFrame implements Runnable, ThreadFactory {
       }
 
       if (result != null && !result.getText().equals(textarea.getText())) {
+        List<String> voiceMessages = new ArrayList<String>();
         java.awt.Toolkit.getDefaultToolkit().beep();
         String id = result.getText();
         PassInfo userInfo = sf.sendId(id);
-        String textMessage, voiceMessage;
+        String textMessage;
         if (userInfo != null) {
           textMessage = "Идентификатор " + id + " обнаружен\nПользователь: " + userInfo;
-          voiceMessage = HelloMessage.getHiMessage(userInfo.getFirstName(),
-              userInfo.getMiddleName(), userInfo.getLastName());
+          voiceMessages.add(HelloMessage.getHiMessage(userInfo.getFirstName(),
+              userInfo.getMiddleName(), userInfo.getLastName()));
+          if (userInfo.getUserMessages().size() > 0) {
+            voiceMessages.add("Для вас есть сообщения");
+            int i=1;
+            for (UserMessage us: userInfo.getUserMessages()) {
+              voiceMessages.add("Сообщение "+ (i++));
+              voiceMessages.add(us.getText());
+            }
+          }
         }
         else {
           textMessage = "Идентификатор " + id + " не обнаружен";
-          voiceMessage = HelloMessage.getBrrrMessage();
+          voiceMessages.add(HelloMessage.getBrrrMessage());
         }
 
         textarea.setText(textMessage);
 
         try {
           Audio audio = Audio.getInstance();
-          InputStream sound = audio.getAudio(voiceMessage, Language.RUSSIAN);
+          for (String s: voiceMessages) {
+          InputStream sound = audio.getAudio(s, Language.RUSSIAN);
           audio.play(sound);
+          Thread.sleep(300);
+          }
         }
         catch (Exception e) {
           e.printStackTrace();
